@@ -51,4 +51,35 @@ Without it: speed depends on FPS (bad). With it: speed is per second (good).
 
 ---
 
+## Rigidbody & Physics
+
+**Rigidbody**: Add this component to a game object to give it physics (gravity, collisions, mass). Add via Inspector > Add Component > Rigidbody.
+
+**GetComponent**: Grabs a reference to another component on the same game object. Declare at class level, assign in Start:
+```csharp
+Rigidbody rb;
+void Start()
+{
+    rb = GetComponent<Rigidbody>();
+}
+```
+
+**FixedUpdate()**: Like Update but runs at fixed intervals. All physics code goes here, not in Update.
+- Use `Time.fixedDeltaTime` instead of `Time.deltaTime` inside FixedUpdate.
+
+**rb.MovePosition**: Moves a Rigidbody through the physics system (respects collisions). Better than transform.Translate for physics objects.
+```csharp
+rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
+```
+
+---
+
+## Vector3
+
+**Vector3**: Three numbers bundled together (x, y, z). Used for positions, directions, and movement.
+- `Vector3.zero` = (0, 0, 0)
+- `direction.normalized` = same direction but length of exactly 1 (fixes diagonal speed being faster)
+
+---
+
 *Add new entries as you learn them. Keep it short.*

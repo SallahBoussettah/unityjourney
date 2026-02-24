@@ -9,17 +9,21 @@ public class PrisonEscape : MonoBehaviour
     public bool isExhausted;
     public bool isMoving;
 
+    public float currentSpeed;
+
+    Rigidbody rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Check if LeftShift Is pressed
-        float currentSpeed = moveSpeed;
+        currentSpeed = moveSpeed;
         // Movement Check
         isMoving = false;
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
@@ -50,23 +54,30 @@ public class PrisonEscape : MonoBehaviour
                 isExhausted = false;
             }
         }
-        Movement(currentSpeed);
     }
 
-    void Movement(float speed)
+    void FixedUpdate()
     {
+        Vector3 direction = Vector3.zero;
+        
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(0, 0, speed * Time.deltaTime);
-        } if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-(speed * Time.deltaTime), 0, 0);
-        } if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0, 0, -(speed * Time.deltaTime));
-        } if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
+            direction.z += 1;
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            direction.z -= 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            direction.x -= 1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            direction.x += 1;
+        }
+        direction = direction.normalized;
+        rb.MovePosition(transform.position + direction * currentSpeed * Time.fixedDeltaTime);
+
     }
 }

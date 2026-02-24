@@ -4,8 +4,8 @@
 - **Phase:** 0 — Setup & First Steps
 - **Current Project:** TheMovingCube (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-24
-- **Total Sessions:** 3
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems
+- **Total Sessions:** 4
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement
 
 ---
 
@@ -159,9 +159,9 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] public variables + Inspector
 - [x] Input system (GetKey, GetKeyDown)
 - [x] Time.deltaTime
-- [ ] Rigidbody + Physics
+- [x] Rigidbody + Physics (MovePosition, FixedUpdate)
 - [ ] Colliders + Triggers
-- [ ] GetComponent<>()
+- [x] GetComponent<>()
 - [ ] Coroutines
 - [ ] ScriptableObjects
 - [ ] Events and Delegates
@@ -222,6 +222,18 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Set Play Mode tint color
 - Key patterns: reads errors well, improvises features, asks "why" not just "how"
 - Next: Phase 0 wrap-up (editor panels orientation), then Phase 1 proper
+
+### Session 4 — 2026-02-24
+- Warm-up: correctly recalled Start vs Update and Time.deltaTime purpose
+- Learned Rigidbody component (gravity, physics, mass)
+- Added a Plane as a floor, cube falls and lands with physics
+- Learned GetComponent<Rigidbody>() to reference components from code
+- Learned FixedUpdate() for physics code (fixed timing vs frame-dependent)
+- Learned Vector3 (bundling x, y, z into one direction)
+- Replaced transform.Translate with rb.MovePosition (physics-based movement)
+- Learned direction.normalized to fix diagonal speed being 1.4x faster
+- Built movement as one Vector3 direction then applied once (cleaner than four Translate calls)
+- Next: Colliders, triggers, collecting items, camera follow
 
 ---
 
