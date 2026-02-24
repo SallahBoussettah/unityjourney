@@ -28,6 +28,12 @@
 - Claude uses Socratic teaching: hints and questions, not handing out answers.
 - Direct answers OK for pure syntax questions (what does this symbol mean?).
 - Claude NEVER generates a complete script.
+
+### End-of-Lesson Challenges
+- After each lesson, Claude gives a challenge described in plain English only. No code.
+- Salah builds it himself from scratch.
+- If something breaks: 3 real attempts to fix it before asking Claude.
+- After 3 tries, Claude helps (hints first, then direct help if needed).
 - No AI code completion tools during learning.
 - Struggle timer increases as skills grow: 3 min (early) > 5-10 min (mid) > 15 min (late).
 
