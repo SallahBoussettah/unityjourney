@@ -1,0 +1,41 @@
+# Unity generated folders
+TheMovingCube/Library/
+TheMovingCube/Temp/
+TheMovingCube/Obj/
+TheMovingCube/Build/
+TheMovingCube/Builds/
+TheMovingCube/Logs/
+TheMovingCube/UserSettings/
+TheMovingCube/MemoryCaptures/
+TheMovingCube/Recordings/
+
+# Unity generated files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Crashlogs
+crashlytics-build.properties
+sysinfo.txt
