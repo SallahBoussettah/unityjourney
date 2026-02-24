@@ -5,7 +5,7 @@
 - **Current Project:** TheMovingCube (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-24
 - **Total Sessions:** 3
-- **Skills Unlocked:** Variables, Debug.Log, type conversion, comments, reading errors
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems
 
 ---
 
@@ -55,8 +55,8 @@ Goal: Get comfortable with Unity editor and C# syntax before making anything vis
 - [x] Create first Unity project (TheMovingCube, URP template)
 - [ ] Change Play Mode tint color (so you never lose work in Play Mode)
 - [x] Session 3: First script, variables, types, Debug.Log(), type conversion
-- [ ] Session 3: if/else, simple functions, still Debug.Log output
-- [ ] Session 4: Attach script to cube, connect code to visuals, cube spins
+- [x] Session 3: if/else, functions, return values, Debug.Log output
+- [x] Session 3: Attach script to cube, rotation, movement, input, sprint/stamina system
 - [ ] Understand Unity Editor panels (Scene, Game, Hierarchy, Inspector, Console, Project)
 
 **C# concepts this phase:** variables (int, float, string, bool), Debug.Log(), if/else, functions, public/private, MonoBehaviour, Start(), Update()
@@ -143,10 +143,10 @@ Goal: A 30-60 minute story-driven game. The real thing.
 ### Fundamentals
 - [x] Variables (int, float, string, bool)
 - [x] Debug.Log()
-- [ ] Functions/Methods (parameters, return values)
-- [ ] if/else conditions
-- [ ] Comparison operators (==, !=, <, >, <=, >=)
-- [ ] Logical operators (&&, ||, !)
+- [x] Functions/Methods (parameters, return values)
+- [x] if/else conditions
+- [x] Comparison operators (==, !=, <, >, <=, >=)
+- [x] Logical operators (&&, ||, !)
 - [ ] Loops (for, foreach, while)
 - [ ] Arrays and Lists
 - [ ] Classes and Objects
@@ -154,11 +154,11 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [ ] Switch statements
 
 ### Unity-Specific
-- [ ] MonoBehaviour (Start, Update, FixedUpdate)
-- [ ] Transform (position, rotation, scale)
-- [ ] public vs private, [SerializeField]
-- [ ] Input system
-- [ ] Time.deltaTime
+- [x] MonoBehaviour (Start, Update)
+- [x] Transform (Rotate, Translate)
+- [x] public variables + Inspector
+- [x] Input system (GetKey, GetKeyDown)
+- [x] Time.deltaTime
 - [ ] Rigidbody + Physics
 - [ ] Colliders + Triggers
 - [ ] GetComponent<>()
@@ -201,25 +201,36 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Decision: No video tutorials, just Claude + Salah
 - Next: Session 3, first C# script, Debug.Log()
 
-### Session 3 — 2026-02-24
-- Wrote first C# script (HelloWorld.cs)
-- Learned: using, class, MonoBehaviour, Start(), Debug.Log()
-- Learned variables: int, float, string, bool
-- Learned string concatenation with +
-- Learned parentheses control order of operations
-- Improvised: did math with variables, combined text and numbers in output
-- Learned type conversion: float to int with (int) casting, lost .5 data
-- Learned comments (//) on his own by experimenting
-- First error message: "cannot explicitly convert type float to int" on line 9
-- Read the error, understood it, fixed it two different ways
-- Next: if/else conditions, simple functions
+### Session 3 — 2026-02-24 (5 hour marathon)
+- Wrote first C# script (HelloWorld.cs): variables, Debug.Log, string concatenation
+- Learned type conversion (float to int), discovered comments on his own
+- First error message read and fixed independently
+- Learned if/else, else if, comparison operators
+- Learned functions with parameters and return values (CheckHealth, TakeDamage)
+- Challenge: DamageCalculator (completed with guidance)
+- Challenge: CombatSimulator (return values, updating health across multiple hits)
+- Learned Update(), Transform.Rotate, Transform.Translate
+- Learned public variables and Inspector tweaking
+- Learned Time.deltaTime for frame-independent movement
+- Learned Input.GetKey, Input.GetKeyDown, KeyCode
+- Learned logical operators: && (AND), || (OR), ! (NOT)
+- Fixed Unity Input System issue (switched to "Both" in Player Settings)
+- Challenge: Speed Boost (shift sprint with Q/E rotation, improvised)
+- Challenge: Prison Escape (WASD + sprint + stamina drain/recovery + isExhausted + isMoving)
+- Debugged execution order issue (movement before sprint check vs after)
+- Refactored movement into its own function unprompted
+- Set Play Mode tint color
+- Key patterns: reads errors well, improvises features, asks "why" not just "how"
+- Next: Phase 0 wrap-up (editor panels orientation), then Phase 1 proper
 
 ---
 
 ## Notes to Future Claude
 - READ THIS FILE at the start of every session. Check "Current Status" and the last Session Log entry.
 - Salah understands logic but is learning to type C#. ALWAYS explain in plain English first.
-- He does NOT watch videos. Claude is the sole teacher.
+- He does NOT follow video tutorials. Claude is the primary teacher. Supplementary watching (Sebastian Lague, GMTK) is fine for understanding, not follow-along.
+- He prefers to check code himself, don't ask him to show it. Just read the file.
+- He doesn't like being asked if he wants to stop. He'll stop when he says so.
 - Let him TRY first, then correct. Never dump full scripts.
 - One concept per session. Don't rush.
 - Update this file at the END of every session.
