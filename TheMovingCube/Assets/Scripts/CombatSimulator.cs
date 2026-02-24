@@ -2,49 +2,27 @@ using UnityEngine;
 
 public class CombatSimulator : MonoBehaviour
 {
+    public float moveSpeed = 10f;
     void Start()
     {
-        int playerHealth = 100;
-        int playerArmor = 100;
-
-        playerHealth = TakeDamage(playerHealth, playerArmor, 50);
-        CheckHealth(playerHealth);
-
-        playerHealth = TakeDamage(playerHealth, playerArmor, 150);
-        CheckHealth(playerHealth);
-
-        playerHealth = TakeDamage(playerHealth, playerArmor, 350);
-        CheckHealth(playerHealth);
-
-    }
-
-    int TakeDamage (int health, int armor, int damage)
-    {
-
-        if (armor > damage)
-        {
-            Debug.Log("No damage taken");
-        } else
-        {
-            int actualDamage = damage - armor;
-            health = health - actualDamage;
-            Debug.Log("Player took " + actualDamage + " damage, Health: " + health);
-        }
         
-        return health;
     }
 
-    void CheckHealth (int health)
+    void Update()
     {
-        if (health <= 0)
+        if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("Player's dead");
-        } else if (health < 50)
+            transform.Translate(0, 0, moveSpeed * Time.deltaTime);
+        } if (Input.GetKey(KeyCode.S))
         {
-            Debug.Log("Player's health below half");
-        } else
+            transform.Translate(0, 0, -(moveSpeed * Time.deltaTime));
+        } if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Player's alive");
+            transform.Translate(-(moveSpeed * Time.deltaTime), 0, 0);
+        } if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
         }
     }
+
 }
