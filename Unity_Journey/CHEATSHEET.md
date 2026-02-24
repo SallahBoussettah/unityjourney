@@ -31,4 +31,24 @@ void Start()
 
 ---
 
+## Update Loop
+
+**Update()**: Runs every frame (60+ times per second). Put continuous gameplay logic here (movement, input, rotation).
+
+**Time.deltaTime**: Multiply any movement/rotation by this in Update(). Makes speed frame-independent (same on all computers).
+```csharp
+transform.Rotate(0, speed * Time.deltaTime, 0);
+```
+Without it: speed depends on FPS (bad). With it: speed is per second (good).
+
+---
+
+## Inspector
+
+**public variables**: Show up in the Inspector. You can tweak them in real time during Play Mode.
+
+**Play Mode warning**: Any changes made in the Inspector during Play Mode reset when you stop. Set a Play Mode tint color so you always know.
+
+---
+
 *Add new entries as you learn them. Keep it short.*
