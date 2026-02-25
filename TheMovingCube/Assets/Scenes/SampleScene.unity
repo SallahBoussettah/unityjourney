@@ -2210,7 +2210,7 @@ MonoBehaviour:
   isMoving: 0
   isAlive: 1
   currentScore: 0
-  ui: {fileID: 0}
+  ui: {fileID: 1119591345}
 --- !u!1 &2100167964
 GameObject:
   m_ObjectHideFlags: 0

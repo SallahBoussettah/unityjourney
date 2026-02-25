@@ -9,6 +9,17 @@ TheMovingCube/UserSettings/
 TheMovingCube/MemoryCaptures/
 TheMovingCube/Recordings/
 
+# SimplePlatformer
+SimplePlatformer/Library/
+SimplePlatformer/Temp/
+SimplePlatformer/Obj/
+SimplePlatformer/Build/
+SimplePlatformer/Builds/
+SimplePlatformer/Logs/
+SimplePlatformer/UserSettings/
+SimplePlatformer/MemoryCaptures/
+SimplePlatformer/Recordings/
+
 # Unity generated files
 *.csproj
 *.unityproj
