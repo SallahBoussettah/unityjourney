@@ -668,16 +668,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2052997429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec0d6a753fc76ec46af4f1401692850c, type: 3}
+  m_Script: {fileID: 11500000, guid: 92860e982d3c4c5488a0581d88f1e58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatSimulator
-  moveSpeed: 10
-  sprintSpeed: 25
-  stamina: 100
-  staminaDrain: 5
-  isExhausted: 0
-  isMoving: 0
-  currentSpeed: 0
 --- !u!54 &2052997435
 Rigidbody:
   m_ObjectHideFlags: 0
