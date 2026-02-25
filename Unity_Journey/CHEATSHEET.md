@@ -143,4 +143,64 @@ Update the text only where the value changes, not every frame in Update.
 
 ---
 
+## Jumping (AddForce)
+
+**rb.AddForce**: Pushes a Rigidbody in a direction. Unlike MovePosition (which carries), AddForce kicks and lets physics take over.
+```csharp
+rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+```
+- `Vector3.up` = (0, 1, 0), straight up
+- `ForceMode.Impulse` = all force applied instantly (one frame). Default mode applies gradually.
+- Jump input goes in **Update** (not FixedUpdate), because GetKeyDown can miss presses in FixedUpdate.
+
+---
+
+## Raycasting (Ground Check)
+
+**Physics.Raycast**: Shoots an invisible ray and returns true if it hits something.
+```csharp
+if (Physics.Raycast(transform.position, Vector3.down, 0.6f))
+{
+    isGrounded = true;
+}
+```
+- Parameters: origin, direction, distance
+- For a ground check: shoot down from player center. Distance = slightly more than half the object height (0.6f for a 1-unit cube).
+
+---
+
+## Collision Events (Solid Objects)
+
+For solid colliders (not triggers), use `Collision` instead of `Collider`:
+```csharp
+void OnCollisionEnter(Collision other)  // first frame of contact
+void OnCollisionExit(Collision other)   // frame contact ends
+void OnCollisionStay(Collision other)   // every frame while touching
+```
+- Access tag: `other.gameObject.CompareTag("TagName")`
+- Access transform: `other.transform`
+
+---
+
+## Mathf.PingPong (Oscillating Movement)
+
+Bounces a value back and forth between 0 and a max:
+```csharp
+float value = Mathf.PingPong(Time.time * speed, maxDistance);
+```
+- `Time.time` keeps counting up forever. Multiply by speed to go faster.
+- Output: 0 > max > 0 > max, repeating smoothly.
+
+---
+
+## Resetting Velocity
+
+When teleporting a Rigidbody (respawn), reset velocity so it doesn't keep falling:
+```csharp
+rb.linearVelocity = Vector3.zero;
+transform.position = startLocation;
+```
+
+---
+
 *Add new entries as you learn them. Keep it short.*

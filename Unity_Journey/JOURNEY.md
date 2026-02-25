@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 1 — The Moving Cube (COMPLETE)
-- **Current Project:** TheMovingCube (Unity 6.3, Universal 3D URP)
+- **Phase:** 2 — Platformer (in progress)
+- **Current Project:** SimplePlatformer (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-25
-- **Total Sessions:** 6
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro
+- **Total Sessions:** 7
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity
 
 ---
 
@@ -80,9 +80,12 @@ Goal: A playable cube that moves, collects items, and has a score.
 ### Phase 2: "Platformer" (4-6 weeks)
 Goal: A small 3D platformer with 2-3 levels.
 
-- [ ] Character controller (jump, gravity, ground check)
-- [ ] Level design with basic shapes
-- [ ] Obstacles and hazards (damage, death, respawn)
+- [x] Character controller (jump, gravity, ground check)
+- [x] Level design with basic shapes (4 platforms)
+- [x] Moving platforms (PingPong, platform carries player)
+- [x] Kill zone (trigger collider, respawn to start)
+- [x] Collectibles + UI score (rebuilt from memory)
+- [ ] Obstacles and hazards (damage, health system)
 - [ ] Multiple levels / scene loading
 - [ ] Sound effects (AudioSource)
 - [ ] Simple main menu
@@ -169,7 +172,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] UI (Canvas, TextMeshPro)
 - [ ] AudioSource
 - [ ] NavMesh (AI navigation)
-- [ ] Raycasting
+- [x] Raycasting (Physics.Raycast for ground check)
 - [ ] Animation (Animator, states, triggers)
 - [ ] JSON / Data persistence
 - [ ] Prefabs (instantiate, destroy)
@@ -266,6 +269,24 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - **Phase 1 COMPLETE**
 - Next: Phase 2, "Platformer"
 
+### Session 7 — 2026-02-25
+- Created SimplePlatformer project (URP), set up clean scene
+- Fixed VS Code IntelliSense issue with new project (Regenerate project files)
+- Wrote PlayerController.cs from memory: Rigidbody, WASD movement, MovePosition, normalized
+- Learned Rigidbody.AddForce with ForceMode.Impulse for jumping
+- Learned Physics.Raycast for ground checking (prevent infinite jumps)
+- Built 4 platforms at different heights for jumping between
+- Created kill zone with invisible trigger collider below platforms
+- Learned rb.linearVelocity = Vector3.zero to reset velocity on respawn
+- Saved start position in Start() for respawn point
+- Rebuilt Collectible + UI score system entirely from memory (no help needed)
+- Rebuilt CameraFollow from memory
+- Learned Mathf.PingPong for oscillating movement (moving platforms)
+- Learned OnCollisionEnter/OnCollisionExit (solid collider events, Collision type)
+- Solved moving platform carrying player: platform exposes public movement vector, player reads it in FixedUpdate and adds to MovePosition
+- Fixed Update vs FixedUpdate timing mismatch (both scripts need same timing)
+- Next: Obstacles/hazards with health system, then more Phase 2 features
+
 ---
 
 ## Notes to Future Claude
@@ -282,8 +303,12 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Update this file at the END of every session.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
-## Current Scripts in Project
-- **ArenaPlayer.cs** (on Cube): WASD physics movement, sprint/stamina, TakeDamage, Heal, death, score with UI text. Has public AddScore(int) that updates TextMeshProUGUI.
-- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore, destroys self.
+## Current Scripts in Project (SimplePlatformer)
+- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, score with UI text. Has public AddScore(int).
+- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore on PlayerController, destroys self.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
-- Scene has: Cube (player, tagged "Player"), Plane (floor), 7 Spheres (collectibles with trigger colliders), Canvas with TMP score text.
+- **MovingPlatform.cs** (on moving platforms): PingPong movement with public offset/speed, exposes movement vector for player to read.
+- Scene has: Cube (player, tagged "Player"), 4 platforms, moving platform (tagged "MovingPlatform"), collectible spheres, kill zone (tagged "KillZone", invisible trigger below), Canvas with TMP score text.
+
+## Previous Project Scripts (TheMovingCube)
+- ArenaPlayer.cs, Collectible.cs, CameraFollow.cs (Phase 1, complete)
