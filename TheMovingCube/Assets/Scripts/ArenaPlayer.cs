@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ArenaPlayer : MonoBehaviour
@@ -19,6 +20,8 @@ public class ArenaPlayer : MonoBehaviour
     public int score = 0;
     
     Rigidbody rb;
+
+    public TextMeshProUGUI ui;
 
     void Start()
     {
@@ -111,7 +114,7 @@ public class ArenaPlayer : MonoBehaviour
     public void AddScore (int amount)
     {
         score = score + amount;
-        Debug.Log("Score : " + score);
+        ui.text = "Score : " + score;
     }
 
     void FixedUpdate()
@@ -133,7 +136,7 @@ public class ArenaPlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            direction.x += 1;
+            direction.x += 1    ;
         }
         if (Input.GetKey(KeyCode.A))
         {
