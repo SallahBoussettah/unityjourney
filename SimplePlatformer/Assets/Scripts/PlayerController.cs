@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +12,10 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     Vector3 startLocation;
     int score;
+
+    public float currentHealth = 100f;
+    public float maxHealth = 100f;
+    public float damagePerSecond = 30f;
     
     MovingPlatform currentPlatform;
 
@@ -47,12 +53,42 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             transform.position = startLocation;
         }
+        // if (other.CompareTag("Hazard"))
+        // {
+        //     Debug.Log("Player taking damage");
+        //     TakeDamage(25);
+        // }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Hazard"))
+        {
+            currentHealth = currentHealth - (damagePerSecond * Time.deltaTime);
+            if (currentHealth <= 0)
+            {
+                rb.linearVelocity = Vector3.zero;
+                transform.position = startLocation;
+                currentHealth = maxHealth;
+            }
+        }
     }
 
     public void AddScore(int amount)
     {
         score = score + amount;
         ui.text = "Score : " + score;
+    }
+
+    void TakeDamage(int amount)
+    {
+        currentHealth = currentHealth - amount;
+        if (currentHealth <= 0)
+        {
+            rb.linearVelocity = Vector3.zero;
+            transform.position = startLocation;
+            currentHealth = maxHealth;
+        }
     }
 
     void FixedUpdate()

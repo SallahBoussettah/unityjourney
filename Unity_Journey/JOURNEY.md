@@ -85,7 +85,7 @@ Goal: A small 3D platformer with 2-3 levels.
 - [x] Moving platforms (PingPong, platform carries player)
 - [x] Kill zone (trigger collider, respawn to start)
 - [x] Collectibles + UI score (rebuilt from memory)
-- [ ] Obstacles and hazards (damage, health system)
+- [x] Obstacles and hazards (health system, gradual damage with OnTriggerStay)
 - [ ] Multiple levels / scene loading
 - [ ] Sound effects (AudioSource)
 - [ ] Simple main menu
@@ -285,7 +285,10 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Learned OnCollisionEnter/OnCollisionExit (solid collider events, Collision type)
 - Solved moving platform carrying player: platform exposes public movement vector, player reads it in FixedUpdate and adds to MovePosition
 - Fixed Update vs FixedUpdate timing mismatch (both scripts need same timing)
-- Next: Obstacles/hazards with health system, then more Phase 2 features
+- Learned OnTriggerStay: fires every frame while inside a trigger (vs OnTriggerEnter which fires once)
+- Built hazard system: gradual damage using damagePerSecond * Time.deltaTime
+- Health resets to max on death, player respawns to start
+- Next: Multiple levels / scene loading, sound effects, main menu
 
 ---
 
@@ -304,11 +307,11 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
 ## Current Scripts in Project (SimplePlatformer)
-- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, score with UI text. Has public AddScore(int).
+- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text. Has public AddScore(int).
 - **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore on PlayerController, destroys self.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
 - **MovingPlatform.cs** (on moving platforms): PingPong movement with public offset/speed, exposes movement vector for player to read.
-- Scene has: Cube (player, tagged "Player"), 4 platforms, moving platform (tagged "MovingPlatform"), collectible spheres, kill zone (tagged "KillZone", invisible trigger below), Canvas with TMP score text.
+- Scene has: Cube (player, tagged "Player"), 4 platforms, moving platform (tagged "MovingPlatform"), collectible spheres, kill zone (tagged "KillZone", invisible trigger below), hazard (tagged "Hazard", trigger collider), Canvas with TMP score text.
 
 ## Previous Project Scripts (TheMovingCube)
 - ArenaPlayer.cs, Collectible.cs, CameraFollow.cs (Phase 1, complete)
