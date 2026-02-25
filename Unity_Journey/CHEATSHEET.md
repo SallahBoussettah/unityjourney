@@ -125,4 +125,22 @@ transform.position = target.position + offset;
 
 ---
 
+## UI Text (TextMeshPro)
+
+**Canvas**: Container for all UI elements. Created automatically when you add a UI element (right-click Hierarchy > UI > Text - TextMeshPro).
+
+**TextMeshProUGUI**: The type for referencing a TMP text element in code. Needs `using TMPro;` at the top of the script.
+```csharp
+using TMPro;
+
+public TextMeshProUGUI ui;
+
+ui.text = "Score: " + score;
+```
+Drag the Text object into the public field in the Inspector (same as CameraFollow target).
+
+Update the text only where the value changes, not every frame in Update.
+
+---
+
 *Add new entries as you learn them. Keep it short.*

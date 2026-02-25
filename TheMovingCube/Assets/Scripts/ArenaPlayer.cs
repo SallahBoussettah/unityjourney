@@ -1,131 +1,123 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ArenaPlayer : MonoBehaviour
 {
-    public float currentHealth = 100f;
+    // Health
+    public float currenthealth = 100f;
     public float maxHealth = 100f;
-    public float currentSpeed;
-    public float walkSpeed = 10f;
-    public float sprintSpeed = 25f;
-    public float stamina = 100f;
-    public float staminaMax = 100f;
-    public float staminaGain = 20f;
-    public float staminaDrain = 10f;
-    public bool isExhausted;
-    public bool isMoving;
-    public bool isAlive = true;  
 
-    //Collecting items
-    public int score = 0;
-    
+    // Movement Speed
+    public float currentSpeed = 15f;
+    public float walkSpeed = 15f;
+    public float sprintSpeed = 30f;
+
+    // Stamina
+    public float currentStamina = 100f;
+    public float maxStamina = 100f;
+    public float gainStamina = 25f;
+    public float drainStamina = 20f;
+    public bool isExhausted;
+
+    // isMoving and isAlive
+    public bool isMoving;
+    public bool isAlive = true;
+
+    // Score count
+    public int currentScore;
+
     Rigidbody rb;
 
     public TextMeshProUGUI ui;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Debug.Log("Health: " + currentHealth);
-        Debug.Log("Stamina: " + stamina);
     }
 
+    // Update is called once per frame
     void Update()
     {
-        //Check if the player is alive
-        if (!isAlive) { return; }
-
-        //Check if the player is moving
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) 
-        { 
-            isMoving = true; 
-        } else
-        {
-            isMoving = false;
-        }
+        if(!isAlive) { return; }
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) { isMoving = true; } else { isMoving = false; }
 
         if (Input.GetKey(KeyCode.LeftShift) && !isExhausted && isMoving)
         {
+            currentStamina = currentStamina - (drainStamina * Time.deltaTime);
             currentSpeed = sprintSpeed;
-            stamina = stamina - (staminaDrain * Time.deltaTime);
-            if (stamina <= 0)
+            if (currentStamina <= 0)
             {
                 isExhausted = true;
             }
         } else
         {
             currentSpeed = walkSpeed;
-            if (stamina < staminaMax)
+            if (currentStamina < maxStamina)
             {
-                if (!isMoving)
+                if(!isMoving)
                 {
-                    stamina = stamina + (2 * staminaGain * Time.deltaTime);
+                    currentStamina = currentStamina + (2 * gainStamina * Time.deltaTime);
                 } else
                 {
-                    stamina = stamina + (staminaGain * Time.deltaTime);
+                    currentStamina = currentStamina + (gainStamina * Time.deltaTime);
                 }
             }
-            if (stamina > 50)
+            if (currentStamina > 50)
             {
                 isExhausted = false;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(25);
-        }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            Heal(20);
+            Heal(25);   
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(25);   
+        }
     }
 
-    void TakeDamage(float damage)
+    public void AddScore(int amount)
     {
-        currentHealth =  currentHealth - damage;
-        Debug.Log("Player took " + damage + " Damage!");
-        if (currentHealth <= 0)
+        currentScore = currentScore + amount;
+        ui.text = "Score: " + currentScore;
+    }
+    
+    void TakeDamage(int amount)
+    {
+        if (!isAlive) { return; }
+
+        currenthealth = currenthealth - amount;
+        if (currenthealth <= 0)
         {
             isAlive = false;
-            Debug.Log("Player is Dead!");
         }
+
     }
 
-    void Heal(float healAmount)
+    void Heal(int amount)
     {
-        if (!isAlive)
-        {
-            return;
-        }
-        if (currentHealth < maxHealth)
-        {
-            float healing = currentHealth + healAmount;
-            currentHealth = healing;
-            Debug.Log("Player's health is : " + currentHealth + " and healed : " + healAmount + "!");
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-            }
-        }
-    }
+        if(!isAlive) { return; }
 
-    public void AddScore (int amount)
-    {
-        score = score + amount;
-        ui.text = "Score : " + score;
+        if (currenthealth < maxHealth)
+        {
+            currenthealth = currenthealth + amount;
+        }
+        if (currenthealth > maxHealth)
+        {
+            currenthealth = maxHealth;
+        }
     }
 
     void FixedUpdate()
     {
         Vector3 direction = Vector3.zero;
 
-        if (!isAlive)
-        {
-            return;
-        }
-        // Checking movement;
+        if (!isAlive) { return; }
+        // Checking inputs
         if (Input.GetKey(KeyCode.W))
         {
             direction.z += 1;
@@ -134,16 +126,15 @@ public class ArenaPlayer : MonoBehaviour
         {
             direction.z -= 1;
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction.x += 1    ;
-        }
         if (Input.GetKey(KeyCode.A))
         {
             direction.x -= 1;
         }
+        if (Input.GetKey(KeyCode.D))
+        {
+            direction.x += 1;
+        }
         direction = direction.normalized;
-        rb.MovePosition(transform.position + direction * currentSpeed * Time.fixedDeltaTime);
-
+        rb.MovePosition(transform.position + direction *  currentSpeed * Time.fixedDeltaTime);
     }
 }

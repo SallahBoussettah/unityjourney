@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 1 — The Moving Cube (in progress)
+- **Phase:** 1 — The Moving Cube (COMPLETE)
 - **Current Project:** TheMovingCube (Unity 6.3, Universal 3D URP)
-- **Last Session:** 2026-02-24
-- **Total Sessions:** 5
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow
+- **Last Session:** 2026-02-25
+- **Total Sessions:** 6
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro
 
 ---
 
@@ -70,8 +70,8 @@ Goal: A playable cube that moves, collects items, and has a score.
 - [x] Camera following the player
 - [x] Basic physics (Rigidbody, collisions)
 - [x] Collecting items (OnTriggerEnter)
-- [ ] Simple UI: score counter
-- [ ] Solo rebuild: rebuild the full game from memory
+- [x] Simple UI: score counter
+- [x] Solo rebuild: rebuild the full game from memory
 
 **C# concepts this phase:** Input handling, Transform.Translate, Time.deltaTime, Rigidbody, OnCollisionEnter, OnTriggerEnter, GetComponent<>(), basic UI text
 
@@ -166,7 +166,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [ ] ScriptableObjects
 - [ ] Events and Delegates
 - [ ] SceneManager
-- [ ] UI (Canvas, Text, Buttons)
+- [x] UI (Canvas, TextMeshPro)
 - [ ] AudioSource
 - [ ] NavMesh (AI navigation)
 - [ ] Raycasting
@@ -252,6 +252,20 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Duplicated 7 spheres, all collected properly with score counting
 - Next: Simple UI (score counter on screen), then solo rebuild of full game
 
+### Session 6 — 2026-02-25
+- Warm-up: correctly recalled Update vs FixedUpdate and cross-script communication with public functions
+- Learned UI Canvas: Unity auto-creates Canvas + EventSystem when adding UI elements
+- Learned TextMeshProUGUI: the type for referencing TMP text in code
+- Learned `using TMPro;` import needed for TextMeshPro access
+- Learned `.text` property to set displayed string on UI text
+- Understood that UI updates belong where the value changes (AddScore), not in Update
+- Added score counter to screen: public TextMeshProUGUI variable, drag in Inspector, update in AddScore
+- **Solo Rebuild: rebuilt ALL three scripts from memory (ArenaPlayer, Collectible, CameraFollow)**
+- Rebuilt cleanly: movement, sprint/stamina, health/damage/heal, collectibles, cross-script calls, camera follow, UI score
+- Only needed two small corrections during rebuild (stamina recovery swap, walkSpeed placement)
+- **Phase 1 COMPLETE**
+- Next: Phase 2, "Platformer"
+
 ---
 
 ## Notes to Future Claude
@@ -269,7 +283,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
 ## Current Scripts in Project
-- **ArenaPlayer.cs** (on Cube): WASD physics movement, sprint/stamina, TakeDamage, Heal, death, score. Has public AddScore(int).
+- **ArenaPlayer.cs** (on Cube): WASD physics movement, sprint/stamina, TakeDamage, Heal, death, score with UI text. Has public AddScore(int) that updates TextMeshProUGUI.
 - **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore, destroys self.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
-- Scene has: Cube (player, tagged "Player"), Plane (floor), 7 Spheres (collectibles with trigger colliders).
+- Scene has: Cube (player, tagged "Player"), Plane (floor), 7 Spheres (collectibles with trigger colliders), Canvas with TMP score text.
