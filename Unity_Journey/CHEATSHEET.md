@@ -82,4 +82,47 @@ rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
 
 ---
 
+## Colliders & Triggers
+
+**Collider**: Invisible shape that defines an object's physical boundary. Box Collider, Sphere Collider, etc. Solid by default.
+
+**Trigger**: A collider with "Is Trigger" checked. Not solid. Objects pass through it, but Unity tells your script something entered.
+
+**OnTriggerEnter**: Unity calls this automatically when something enters a trigger:
+```csharp
+void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Player"))
+    {
+        Destroy(gameObject);
+    }
+}
+```
+
+**CompareTag("TagName")**: Check what entered. Set tags on objects via Inspector > Tag dropdown.
+
+**Destroy(gameObject)**: Removes the object this script is attached to.
+
+---
+
+## Cross-Script Communication
+
+To call a function on another object's script:
+```csharp
+ArenaPlayer player = other.GetComponent<ArenaPlayer>();
+player.AddScore(1);
+```
+The function must be `public` to be visible from other scripts.
+
+---
+
+## Camera Follow
+
+Use a `public Transform target` variable. Drag the object into the Inspector. Access its position with `target.position`.
+```csharp
+transform.position = target.position + offset;
+```
+
+---
+
 *Add new entries as you learn them. Keep it short.*

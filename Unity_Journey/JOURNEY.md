@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 0 — Setup & First Steps
+- **Phase:** 1 — The Moving Cube (in progress)
 - **Current Project:** TheMovingCube (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-24
 - **Total Sessions:** 5
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow
 
 ---
 
@@ -53,7 +53,7 @@ Goal: Get comfortable with Unity editor and C# syntax before making anything vis
 - [x] Install Unity Hub + Unity 6.3
 - [x] Install VS Code + C# Dev Kit
 - [x] Create first Unity project (TheMovingCube, URP template)
-- [ ] Change Play Mode tint color (so you never lose work in Play Mode)
+- [x] Change Play Mode tint color (so you never lose work in Play Mode)
 - [x] Session 3: First script, variables, types, Debug.Log(), type conversion
 - [x] Session 3: if/else, functions, return values, Debug.Log output
 - [x] Session 3: Attach script to cube, rotation, movement, input, sprint/stamina system
@@ -64,12 +64,12 @@ Goal: Get comfortable with Unity editor and C# syntax before making anything vis
 ### Phase 1: "The Moving Cube" (2-3 weeks)
 Goal: A playable cube that moves, collects items, and has a score.
 
-- [ ] Player input (WASD / arrow keys)
-- [ ] Moving a 3D object with code YOU write
-- [ ] Time.deltaTime (frame-independent movement)
-- [ ] Camera following the player
-- [ ] Basic physics (Rigidbody, collisions)
-- [ ] Collecting items (OnTriggerEnter)
+- [x] Player input (WASD / arrow keys)
+- [x] Moving a 3D object with code YOU write
+- [x] Time.deltaTime (frame-independent movement)
+- [x] Camera following the player
+- [x] Basic physics (Rigidbody, collisions)
+- [x] Collecting items (OnTriggerEnter)
 - [ ] Simple UI: score counter
 - [ ] Solo rebuild: rebuild the full game from memory
 
@@ -160,7 +160,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] Input system (GetKey, GetKeyDown)
 - [x] Time.deltaTime
 - [x] Rigidbody + Physics (MovePosition, FixedUpdate)
-- [ ] Colliders + Triggers
+- [x] Colliders + Triggers (OnTriggerEnter, CompareTag, Destroy)
 - [x] GetComponent<>()
 - [ ] Coroutines
 - [ ] ScriptableObjects
@@ -241,7 +241,16 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Clean separation of sprint vs recovery logic
 - Properly used GetKeyDown for one-time actions (Space, H)
 - All systems stop when dead (isAlive checks in Update and FixedUpdate)
-- Next: Colliders, triggers, collecting items, camera follow
+- Learned OnTriggerEnter: detects when objects overlap (trigger colliders)
+- Learned CompareTag("Player") to filter what triggers the event
+- Learned Destroy(gameObject) to remove objects at runtime
+- Learned cross-script communication: GetComponent<ArenaPlayer>() from another script
+- Learned public functions: needed for other scripts to call AddScore
+- Created Collectible.cs: sphere items the player walks through to collect, score goes up
+- Created CameraFollow.cs: camera follows player using Transform reference and Vector3 offset
+- Learned public Transform target: drag objects into Inspector to link them
+- Duplicated 7 spheres, all collected properly with score counting
+- Next: Simple UI (score counter on screen), then solo rebuild of full game
 
 ---
 
@@ -250,8 +259,17 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Salah understands logic but is learning to type C#. ALWAYS explain in plain English first.
 - He does NOT follow video tutorials. Claude is the primary teacher. Supplementary watching (Sebastian Lague, GMTK) is fine for understanding, not follow-along.
 - He prefers to check code himself, don't ask him to show it. Just read the file.
-- He doesn't like being asked if he wants to stop. He'll stop when he says so.
+- He doesn't like being asked if he wants to stop or take a break. He'll stop when he says so.
+- Never use em dashes. Use commas, periods, colons, or restructure sentences.
+- Never mention Claude in commit messages. No Co-Authored-By, no AI references.
 - Let him TRY first, then correct. Never dump full scripts.
-- One concept per session. Don't rush.
+- When he asks to check his code, just read the file yourself.
+- VS Code auto-adds unused imports sometimes, don't nag about it every time.
 - Update this file at the END of every session.
 - Spawn research teams when investigating new topics, not for routine teaching.
+
+## Current Scripts in Project
+- **ArenaPlayer.cs** (on Cube): WASD physics movement, sprint/stamina, TakeDamage, Heal, death, score. Has public AddScore(int).
+- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore, destroys self.
+- **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
+- Scene has: Cube (player, tagged "Player"), Plane (floor), 7 Spheres (collectibles with trigger colliders).

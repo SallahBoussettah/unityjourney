@@ -14,6 +14,9 @@ public class ArenaPlayer : MonoBehaviour
     public bool isExhausted;
     public bool isMoving;
     public bool isAlive = true;  
+
+    //Collecting items
+    public int score = 0;
     
     Rigidbody rb;
 
@@ -103,6 +106,12 @@ public class ArenaPlayer : MonoBehaviour
                 currentHealth = maxHealth;
             }
         }
+    }
+
+    public void AddScore (int amount)
+    {
+        score = score + amount;
+        Debug.Log("Score : " + score);
     }
 
     void FixedUpdate()
