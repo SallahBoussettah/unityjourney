@@ -86,11 +86,11 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 
 ## CURRENT STATE
 
-- **Phase:** 2 — Platformer (COMPLETE, including Gauntlet solo challenge)
+- **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Unity Installed:** Yes (Unity 6.3)
 - **Last Session:** 2026-02-26
-- **Sessions so far:** 9
-- **Next step:** Phase 3, "Survive the Night" (enemy AI, health, inventory, flashlight, spawning)
+- **Sessions so far:** 10
+- **Next step:** Session 11, enemy states with enums and switch statements
 
 ---
 
@@ -102,4 +102,5 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 **2026-02-25:** Sessions 5-6. Triggers, collectibles, cross-script comms, UI. Solo rebuild passed. Phase 1 COMPLETE.
 **2026-02-25-26:** Sessions 7-8. Phase 2: jumping, raycasting, moving platforms, kill zones, hazards, scene loading, audio, main menu. Phase 2 COMPLETE.
 **2026-02-26:** Session 9. Gauntlet challenge: rebuilt entire game from scratch with no reference. Discovered new patterns independently (string interpolation, LateUpdate, MoveTowards, ternary, helper functions). Phase 2 FULLY COMPLETE.
-**Next:** Phase 3, "Survive the Night".
+**2026-02-26:** Session 10. Phase 3 started. Created SurviveTheNight project. Learned arrays, lists, for loops, prefabs, Instantiate, Random.Range, spawn timer. Built enemy chase + spawner + health/damage system.
+**Next:** Session 11, enemy states (enums, switch statements).

@@ -20,6 +20,17 @@ SimplePlatformer/UserSettings/
 SimplePlatformer/MemoryCaptures/
 SimplePlatformer/Recordings/
 
+# SurviveTheNight
+SurviveTheNight/Library/
+SurviveTheNight/Temp/
+SurviveTheNight/Obj/
+SurviveTheNight/Build/
+SurviveTheNight/Builds/
+SurviveTheNight/Logs/
+SurviveTheNight/UserSettings/
+SurviveTheNight/MemoryCaptures/
+SurviveTheNight/Recordings/
+
 # Unity generated files
 *.csproj
 *.unityproj

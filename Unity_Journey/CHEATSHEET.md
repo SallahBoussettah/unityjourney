@@ -99,6 +99,17 @@ void OnTriggerEnter(Collider other)
 }
 ```
 
+**OnTriggerStay**: Same as OnTriggerEnter, but fires **every frame** while the object stays inside the trigger. Used for gradual effects like hazard damage:
+```csharp
+void OnTriggerStay(Collider other)
+{
+    if (other.CompareTag("Player"))
+    {
+        TakeDamage(damagePerSecond * Time.deltaTime);
+    }
+}
+```
+
 **CompareTag("TagName")**: Check what entered. Set tags on objects via Inspector > Tag dropdown.
 
 **Destroy(gameObject)**: Removes the object this script is attached to.
@@ -242,6 +253,187 @@ Create: right-click Hierarchy > UI > Button - TextMeshPro.
 Hook up in Inspector: Button component > OnClick > drag the object with your script > select the public function.
 
 The function must be `public void` with no parameters (or one basic parameter like string/int).
+
+---
+
+## Input (GetKey vs GetKeyDown)
+
+**Input.GetKey(KeyCode.W)**: Returns true **every frame** the key is held down. Use for continuous actions like movement.
+
+**Input.GetKeyDown(KeyCode.Space)**: Returns true **only the first frame** the key is pressed. Use for one-time actions like jumping or shooting.
+```csharp
+// Held down = continuous
+if (Input.GetKey(KeyCode.W)) { direction.z += 1; }
+
+// Pressed once = one-time
+if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+```
+
+---
+
+## LateUpdate
+
+**LateUpdate()**: Runs every frame, but **after** all Update() calls have finished. Use for camera follow, so the camera moves after the player has moved.
+```csharp
+void LateUpdate()
+{
+    transform.position = target.position + offset;
+}
+```
+Order each frame: FixedUpdate (physics) > Update (gameplay) > LateUpdate (camera).
+
+---
+
+## String Interpolation
+
+Instead of concatenating strings with `+`, use `$` before the string and `{}` around variables:
+```csharp
+// Old way
+healthText.text = "Health: " + currentHealth + "/" + maxHealth;
+
+// Better way
+healthText.text = $"Health: {currentHealth}/{maxHealth}";
+```
+
+---
+
+## Shorthand Operators
+
+```csharp
+currentHealth -= damage;    // same as: currentHealth = currentHealth - damage
+score += 1;                 // same as: score = score + 1
+speed *= 2;                 // same as: speed = speed * 2
+```
+
+---
+
+## Vector3.MoveTowards
+
+Moves a position toward a target at a given speed. Stops exactly at the target (won't overshoot).
+```csharp
+transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.fixedDeltaTime);
+```
+- Parameters: current position, target position, max distance to move this frame.
+- Alternative to Mathf.PingPong for moving platforms. More flexible since you pick exact start/end points.
+
+---
+
+## Ternary Operator
+
+A one-line if/else. Returns one of two values based on a condition:
+```csharp
+target = (target == pointA) ? pointB : pointA;
+
+// Same as:
+if (target == pointA) { target = pointB; }
+else { target = pointA; }
+```
+
+---
+
+## Null Checks
+
+Before using a component reference, check if it's not null to avoid NullReferenceException:
+```csharp
+if (audioSource != null && clip != null)
+{
+    audioSource.PlayOneShot(clip);
+}
+```
+Especially useful for optional Inspector fields (like UI text that might not be assigned in every scene).
+
+---
+
+## Arrays
+
+Fixed-size collection of values. Declare with a type and size:
+```csharp
+int[] scores = new int[3];
+scores[0] = 10;
+scores[1] = 20;
+Debug.Log(scores[0]);    // 10
+Debug.Log(scores.Length); // 3
+```
+- Index starts at 0. An array of size 3 has indices 0, 1, 2.
+- Size is fixed. Can't add or remove after creation.
+
+---
+
+## Lists
+
+Like arrays but they **grow and shrink**. Need `using System.Collections.Generic;`.
+```csharp
+List<string> items = new List<string>();
+items.Add("Sword");       // adds to end
+items.Remove("Sword");    // finds and removes it
+items.Count               // how many items
+items[0]                  // access by index
+```
+- When you remove an item, everything after it slides down (indices change).
+- Use Lists over arrays when the size changes at runtime (enemies, inventory, etc.).
+
+---
+
+## For Loops
+
+Repeats code a set number of times:
+```csharp
+for (int i = 0; i < 5; i++)
+{
+    Debug.Log(i);  // prints 0, 1, 2, 3, 4
+}
+```
+- `int i = 0` — counter starts at 0
+- `i < 5` — keep going while true
+- `i++` — add 1 after each loop (same as `i += 1`)
+
+---
+
+## Prefabs and Instantiate
+
+**Prefab**: A saved template of a GameObject. Drag an object from the Hierarchy into the Project folder to create one. Delete the original from the scene.
+
+**Instantiate**: Creates a copy of a prefab at runtime:
+```csharp
+public GameObject enemyPrefab;
+GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
+```
+- Returns the new GameObject so you can store it and modify it.
+- `Quaternion.identity` = no rotation.
+- After spawning, set references from code (prefabs can't reference scene objects):
+```csharp
+enemy.GetComponent<EnemyFollow>().target = playerTransform;
+```
+
+---
+
+## Spawn Timer Pattern
+
+Spawn things over time instead of all at once:
+```csharp
+float timer = 0f;
+public float spawnInterval = 3f;
+
+void Update()
+{
+    timer += Time.deltaTime;
+    if (timer >= spawnInterval)
+    {
+        // spawn something
+        timer = 0f;
+    }
+}
+```
+
+---
+
+## Random.Range
+
+Picks a random number between min and max:
+```csharp
+float x = Random.Range(-8f, 8f);   // float version: includes both ends
+int num = Random.Range(0, 10);      // int version: includes min, EXCLUDES max (0-9)
+```
 
 ---
 

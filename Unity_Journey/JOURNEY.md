@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 2 — Platformer (COMPLETE, including Gauntlet challenge)
-- **Current Project:** SimplePlatformer (Unity 6.3, Universal 3D URP)
+- **Phase:** 3 — Survive the Night (IN PROGRESS)
+- **Current Project:** SurviveTheNight (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-26
-- **Total Sessions:** 9
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions
+- **Total Sessions:** 10
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime
 
 ---
 
@@ -95,11 +95,13 @@ Goal: A small 3D platformer with 2-3 levels.
 ### Phase 3: "Survive the Night" (4-6 weeks)
 Goal: A survival game with enemies, health, and a flashlight.
 
-- [ ] Enemy AI (chase player, patrol, attack)
-- [ ] Health system (take damage, die, heal)
+- [x] Enemy AI: basic chase (MoveTowards), damage on contact, self-destruct
+- [x] Health system (take damage, die)
+- [x] Spawn system (timer-based, random positions, prefabs, list tracking, enemy self-removal)
+- [ ] Enemy AI: patrol, states (enum/switch), NavMesh pathfinding
+- [ ] Health system: heal, UI display
 - [ ] Simple inventory (pick up items, use them)
 - [ ] Flashlight mechanic
-- [ ] Spawn system (enemies appear over time)
 - [ ] Win/lose conditions
 
 **C# concepts this phase:** enums, switch statements, NavMesh, ScriptableObjects, more complex classes
@@ -150,8 +152,8 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] if/else conditions
 - [x] Comparison operators (==, !=, <, >, <=, >=)
 - [x] Logical operators (&&, ||, !)
-- [ ] Loops (for, foreach, while)
-- [ ] Arrays and Lists
+- [x] Loops (for)
+- [x] Arrays and Lists
 - [ ] Classes and Objects
 - [ ] Enums
 - [ ] Switch statements
@@ -175,7 +177,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] Raycasting (Physics.Raycast for ground check)
 - [ ] Animation (Animator, states, triggers)
 - [ ] JSON / Data persistence
-- [ ] Prefabs (instantiate, destroy)
+- [x] Prefabs (Instantiate, Destroy, Random.Range)
 
 ### Patterns
 - [ ] Component pattern (naming what you already do)
@@ -326,6 +328,23 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - **Phase 2 FULLY COMPLETE (including challenge)**
 - Next: Phase 3, "Survive the Night"
 
+### Session 10 — 2026-02-26
+- Created SurviveTheNight project (URP), set up scene with floor, player cube, enemy cube
+- Learned arrays (fixed size, indexed from 0) and Lists (dynamic size, Add, Remove, Count)
+- Learned for loops (counter, condition, increment)
+- Wrote PlayerController from memory (3rd time): WASD, jump, ground check
+- Wrote EnemyFollow.cs: chases player using Vector3.MoveTowards
+- Learned Prefabs: drag object from Hierarchy to Project to save as template
+- Learned Instantiate: spawn prefab copies at runtime with position and rotation
+- Wrote EnemySpawner.cs: timer-based spawning, random positions, max enemy cap
+- Learned Random.Range for random spawn positions
+- Added health/damage system: enemy deals damage on OnCollisionEnter, player dies at 0 health
+- Brought back isAlive pattern from Phase 1 unprompted (stops movement/jump when dead)
+- Bonus challenge: enemy removes itself from spawner's list before destroying itself
+- Learned `this` keyword (spawner passes reference to itself when spawning enemies)
+- Learned cross-script reference pattern at runtime (spawner sets target and spawner refs after Instantiate)
+- Next: Enemy states with enums and switch statements
+
 ---
 
 ## Notes to Future Claude
@@ -342,13 +361,14 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Update this file at the END of every session.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
-## Current Scripts in Project (SimplePlatformer — Gauntlet Challenge)
-- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text (string interpolation), sound effects (jump/collect/damage with helper function), scene loading on Goal trigger, moving platform support via movement vector. Has public AddScore(int), public PlaySoundEffect(AudioClip).
-- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore and PlaySoundEffect on PlayerController, destroys self. Null check on player reference.
+## Current Scripts in Project (SurviveTheNight)
+- **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, isAlive stops movement/jump when dead). Public TakeDamage(float).
+- **EnemyFollow.cs** (on Enemy Prefab): Chases player via Vector3.MoveTowards. OnCollisionEnter deals damage to player, tells spawner to remove from list, destroys self. Holds public references to target (Transform) and spawner (EnemySpawner).
+- **EnemySpawner.cs** (on empty GameObject): Timer-based spawning with Random.Range positions. Instantiates enemy prefab, sets target and spawner refs. List tracks spawned enemies, maxEnemies cap. Public destroyEnemy(GameObject) removes from list.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
-- **MovingPlatform.cs** (on moving platforms): Vector3.MoveTowards between two Transform points (PointA/PointB), ternary operator for target swap, exposes public movement vector for player to read. Runs in FixedUpdate.
-- **WinScreen.cs** (on object in WinScreen scene): public PlayGame() loads Level1 via SceneManager.
-- Scenes: Level1 (index 0, the Gauntlet), WinScreen (index 1).
 
-## Previous Project Scripts (TheMovingCube)
-- ArenaPlayer.cs, Collectible.cs, CameraFollow.cs (Phase 1, complete)
+## Previous Project Scripts (SimplePlatformer — Phase 2)
+- PlayerController.cs, Collectible.cs, CameraFollow.cs, MovingPlatform.cs, WinScreen.cs
+
+## Previous Project Scripts (TheMovingCube — Phase 1)
+- ArenaPlayer.cs, Collectible.cs, CameraFollow.cs
