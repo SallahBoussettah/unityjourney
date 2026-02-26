@@ -5,10 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - KillZone
-  - Collectibles
   - MovingPlatform
   - Hazard
   - Goal
+  - Collectible
   layers:
   - Default
   - TransparentFX
