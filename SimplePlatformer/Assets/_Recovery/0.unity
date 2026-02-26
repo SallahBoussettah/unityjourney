@@ -783,6 +783,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 10
   jumpForce: 10
+  currentHealth: 100
+  maxHealth: 100
+  damagePerSecond: 10
   ui: {fileID: 1874799803}
 --- !u!54 &788175799
 Rigidbody:

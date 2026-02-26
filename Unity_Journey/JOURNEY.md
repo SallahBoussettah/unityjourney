@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 2 — Platformer (in progress)
+- **Phase:** 2 — Platformer (COMPLETE)
 - **Current Project:** SimplePlatformer (Unity 6.3, Universal 3D URP)
-- **Last Session:** 2026-02-25
-- **Total Sessions:** 7
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity
+- **Last Session:** 2026-02-26
+- **Total Sessions:** 8
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu
 
 ---
 
@@ -86,9 +86,9 @@ Goal: A small 3D platformer with 2-3 levels.
 - [x] Kill zone (trigger collider, respawn to start)
 - [x] Collectibles + UI score (rebuilt from memory)
 - [x] Obstacles and hazards (health system, gradual damage with OnTriggerStay)
-- [ ] Multiple levels / scene loading
-- [ ] Sound effects (AudioSource)
-- [ ] Simple main menu
+- [x] Multiple levels / scene loading (SceneManager, Build Settings)
+- [x] Sound effects (AudioSource, PlayOneShot, AudioClip)
+- [x] Simple main menu (UI Button, OnClick event, separate scene)
 
 **C# concepts this phase:** arrays/lists, loops (for, foreach), Rigidbody.AddForce, raycasts, SceneManager, AudioSource, coroutines
 
@@ -168,9 +168,9 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [ ] Coroutines
 - [ ] ScriptableObjects
 - [ ] Events and Delegates
-- [ ] SceneManager
-- [x] UI (Canvas, TextMeshPro)
-- [ ] AudioSource
+- [x] SceneManager (LoadScene, Build Settings scene list)
+- [x] UI (Canvas, TextMeshPro, Buttons, OnClick)
+- [x] AudioSource (PlayOneShot, AudioClip, isPlaying)
 - [ ] NavMesh (AI navigation)
 - [x] Raycasting (Physics.Raycast for ground check)
 - [ ] Animation (Animator, states, triggers)
@@ -290,6 +290,21 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Health resets to max on death, player respawns to start
 - Next: Multiple levels / scene loading, sound effects, main menu
 
+### Session 8 — 2026-02-26
+- Learned SceneManager.LoadScene for switching between scenes
+- Learned Build Settings: scenes must be added to Scene List with index numbers
+- Created Level2 scene, set up goal trigger to load next level
+- Used public string nextLevel for reusable scene loading (different per level in Inspector)
+- Learned AudioSource component: PlayOneShot(clip), AudioClip public variables
+- Fixed NullReferenceException: forgot to GetComponent AudioSource in Start
+- Fixed sound spam in OnTriggerStay: used !audioSource.isPlaying check
+- Fixed "audio" name conflict: renamed to audioSource (audio is a deprecated inherited name)
+- Created MainMenu scene with Canvas, title text, and Play button
+- Learned UI Button OnClick event: drag script object, select public function
+- MainMenu loads Level1, Level1 goal loads Level2, Level2 goal loads Level1
+- **Phase 2 COMPLETE**
+- Next: Phase 3, "Survive the Night"
+
 ---
 
 ## Notes to Future Claude
@@ -307,11 +322,12 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
 ## Current Scripts in Project (SimplePlatformer)
-- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text. Has public AddScore(int).
+- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text, sound effects (jump/collect/damage), scene loading on Goal trigger. Has public AddScore(int), public string nextLevel.
 - **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore on PlayerController, destroys self.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
 - **MovingPlatform.cs** (on moving platforms): PingPong movement with public offset/speed, exposes movement vector for player to read.
-- Scene has: Cube (player, tagged "Player"), 4 platforms, moving platform (tagged "MovingPlatform"), collectible spheres, kill zone (tagged "KillZone", invisible trigger below), hazard (tagged "Hazard", trigger collider), Canvas with TMP score text.
+- **MainMenu.cs** (on Loader in MainMenu scene): public PlayGame() loads Level1 via SceneManager.
+- Scenes: MainMenu (index 0), Level1 (index 1), Level2 (index 2).
 
 ## Previous Project Scripts (TheMovingCube)
 - ArenaPlayer.cs, Collectible.cs, CameraFollow.cs (Phase 1, complete)

@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,18 +12,25 @@ public class PlayerController : MonoBehaviour
     Vector3 startLocation;
     int score;
 
+    public string nextLevel;
+
     public float currentHealth = 100f;
     public float maxHealth = 100f;
     public float damagePerSecond = 30f;
     
     MovingPlatform currentPlatform;
 
-    public TextMeshProUGUI ui;    
+    public TextMeshProUGUI ui;
+    AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip collectSound;
+    public AudioClip damageSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         startLocation = transform.position;
     }
 
@@ -41,6 +47,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            audioSource.PlayOneShot(jumpSound);
         }   
              
     }
@@ -53,11 +60,10 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             transform.position = startLocation;
         }
-        // if (other.CompareTag("Hazard"))
-        // {
-        //     Debug.Log("Player taking damage");
-        //     TakeDamage(25);
-        // }
+        if (other.CompareTag("Goal"))
+        {
+            SceneManager.LoadScene(nextLevel);
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -65,6 +71,10 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Hazard"))
         {
             currentHealth = currentHealth - (damagePerSecond * Time.deltaTime);
+            if(!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(damageSound);
+            }
             if (currentHealth <= 0)
             {
                 rb.linearVelocity = Vector3.zero;
@@ -77,6 +87,7 @@ public class PlayerController : MonoBehaviour
     public void AddScore(int amount)
     {
         score = score + amount;
+        audioSource.PlayOneShot(collectSound);
         ui.text = "Score : " + score;
     }
 

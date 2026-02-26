@@ -203,4 +203,46 @@ transform.position = startLocation;
 
 ---
 
+## Scene Loading
+
+**SceneManager.LoadScene**: Loads a new scene, replacing everything. Needs `using UnityEngine.SceneManagement;`.
+```csharp
+SceneManager.LoadScene("Level2");
+```
+- Scenes must be added to **Build Settings > Scene List** first.
+- Scene at index 0 loads on game start.
+- Use a `public string nextLevel` to make it reusable per level.
+
+---
+
+## Audio
+
+**AudioSource**: Component that plays sounds. Add to GameObject, uncheck "Play On Awake".
+```csharp
+AudioSource audioSource;
+public AudioClip jumpSound;
+
+void Start()
+{
+    audioSource = GetComponent<AudioSource>();
+}
+
+audioSource.PlayOneShot(jumpSound);
+```
+- `PlayOneShot(clip)`: plays a clip once without interrupting others.
+- `audioSource.isPlaying`: check if something is already playing (prevents sound spam in OnTriggerStay).
+- Don't name your variable `audio` (conflicts with a deprecated Unity name). Use `audioSource`.
+
+---
+
+## UI Buttons
+
+Create: right-click Hierarchy > UI > Button - TextMeshPro.
+
+Hook up in Inspector: Button component > OnClick > drag the object with your script > select the public function.
+
+The function must be `public void` with no parameters (or one basic parameter like string/int).
+
+---
+
 *Add new entries as you learn them. Keep it short.*
