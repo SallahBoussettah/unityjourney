@@ -1,11 +1,11 @@
 # Salah's Unity Game Dev Journey
 
 ## Current Status
-- **Phase:** 2 — Platformer (COMPLETE)
+- **Phase:** 2 — Platformer (COMPLETE, including Gauntlet challenge)
 - **Current Project:** SimplePlatformer (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-26
-- **Total Sessions:** 8
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu
+- **Total Sessions:** 9
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions
 
 ---
 
@@ -305,6 +305,27 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - **Phase 2 COMPLETE**
 - Next: Phase 3, "Survive the Night"
 
+### Session 9 — 2026-02-26 (Gauntlet Challenge)
+- **Solo challenge: "The Gauntlet" — rebuilt ALL scripts from scratch, no reference, no peeking**
+- Deleted all old scripts and scenes, started completely fresh
+- Wrote PlayerController.cs from scratch: movement, jump, ground check, health, damage, respawn, score, audio, kill zone, hazard, goal, moving platform support
+- Wrote Collectible.cs from scratch: trigger detection, cross-script AddScore, destroy
+- Wrote CameraFollow.cs from scratch: used LateUpdate (improvement over Update)
+- Wrote MovingPlatform.cs from scratch: used Vector3.MoveTowards with two Transform points (new approach, different from PingPong)
+- Wrote WinScreen.cs from scratch: button loads game scene
+- New concepts discovered during challenge (not taught):
+  - String interpolation: $"Health: {currentHealth}/{maxHealth}"
+  - Shorthand operators: currentHealth -= damage
+  - LateUpdate for camera (runs after all Updates)
+  - Vector3.MoveTowards as alternative to PingPong
+  - Ternary operator: condition ? valueA : valueB
+  - Null safety checks on components
+  - Helper function pattern (PlaySoundEffect) to reduce code repetition
+- Built 3-room level: collectibles room, hazard room, moving platform room
+- Full game loop: play > collect > survive > ride platform > goal > win screen > play again
+- **Phase 2 FULLY COMPLETE (including challenge)**
+- Next: Phase 3, "Survive the Night"
+
 ---
 
 ## Notes to Future Claude
@@ -321,13 +342,13 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Update this file at the END of every session.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
-## Current Scripts in Project (SimplePlatformer)
-- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text, sound effects (jump/collect/damage), scene loading on Goal trigger. Has public AddScore(int), public string nextLevel.
-- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore on PlayerController, destroys self.
-- **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset.
-- **MovingPlatform.cs** (on moving platforms): PingPong movement with public offset/speed, exposes movement vector for player to read.
-- **MainMenu.cs** (on Loader in MainMenu scene): public PlayGame() loads Level1 via SceneManager.
-- Scenes: MainMenu (index 0), Level1 (index 1), Level2 (index 2).
+## Current Scripts in Project (SimplePlatformer — Gauntlet Challenge)
+- **PlayerController.cs** (on Cube): WASD physics movement, jumping with AddForce, ground check with Raycast, kill zone respawn, health system with gradual hazard damage (OnTriggerStay), score with UI text (string interpolation), sound effects (jump/collect/damage with helper function), scene loading on Goal trigger, moving platform support via movement vector. Has public AddScore(int), public PlaySoundEffect(AudioClip).
+- **Collectible.cs** (on Spheres): OnTriggerEnter, CompareTag("Player"), calls AddScore and PlaySoundEffect on PlayerController, destroys self. Null check on player reference.
+- **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
+- **MovingPlatform.cs** (on moving platforms): Vector3.MoveTowards between two Transform points (PointA/PointB), ternary operator for target swap, exposes public movement vector for player to read. Runs in FixedUpdate.
+- **WinScreen.cs** (on object in WinScreen scene): public PlayGame() loads Level1 via SceneManager.
+- Scenes: Level1 (index 0, the Gauntlet), WinScreen (index 1).
 
 ## Previous Project Scripts (TheMovingCube)
 - ArenaPlayer.cs, Collectible.cs, CameraFollow.cs (Phase 1, complete)

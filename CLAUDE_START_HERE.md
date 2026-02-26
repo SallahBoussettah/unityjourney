@@ -86,14 +86,20 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 
 ## CURRENT STATE
 
-- **Phase:** 0 — Not started yet
-- **Unity Installed:** No
-- **Last Session:** 2026-02-24
-- **Sessions so far:** 1 (planning only)
-- **Next step:** Install Unity Hub + Unity LTS, set up code editor, create first project, write first C# script
+- **Phase:** 2 — Platformer (COMPLETE, including Gauntlet solo challenge)
+- **Unity Installed:** Yes (Unity 6.3)
+- **Last Session:** 2026-02-26
+- **Sessions so far:** 9
+- **Next step:** Phase 3, "Survive the Night" (enemy AI, health, inventory, flashlight, spawning)
 
 ---
 
 ## SESSION LOG (Keep brief — just date + what happened + next step)
 
-**2026-02-24:** Brainstormed 5 story concepts. Researched Unity vs Unreal. Chose Unity. Established learning-first philosophy. Created tracking system. Next: Install Unity, Phase 0.
+**2026-02-24:** Brainstormed 5 story concepts. Researched Unity vs Unreal. Chose Unity. Established learning-first philosophy. Created tracking system.
+**2026-02-24:** Installed Unity 6.3, VS Code. Created TheMovingCube project. Research council established teaching method.
+**2026-02-24:** Sessions 3-4. Learned C# from scratch (variables, if/else, functions, Update, Transform, Input, Rigidbody, Vector3, physics movement). 5 hour marathon.
+**2026-02-25:** Sessions 5-6. Triggers, collectibles, cross-script comms, UI. Solo rebuild passed. Phase 1 COMPLETE.
+**2026-02-25-26:** Sessions 7-8. Phase 2: jumping, raycasting, moving platforms, kill zones, hazards, scene loading, audio, main menu. Phase 2 COMPLETE.
+**2026-02-26:** Session 9. Gauntlet challenge: rebuilt entire game from scratch with no reference. Discovered new patterns independently (string interpolation, LateUpdate, MoveTowards, ternary, helper functions). Phase 2 FULLY COMPLETE.
+**Next:** Phase 3, "Survive the Night".
