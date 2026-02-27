@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyFollow : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class EnemyFollow : MonoBehaviour
     public float speed = 3f;
     public float damage = 10f;
     public EnemySpawner spawner;
+
+    NavMeshAgent agent;
 
     public float playerDetection = 15f;
     public float patrolDetection = 25f;
@@ -28,6 +31,8 @@ public class EnemyFollow : MonoBehaviour
 
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
         pointA = transform.position + Vector3.right * 5f;
         pointB = transform.position - Vector3.right * 5f;
         pointTracker = pointB;
@@ -56,20 +61,21 @@ public class EnemyFollow : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.Idle:
-                // Idle logic still gonna come here.
+                agent.ResetPath();
                 break;
             case EnemyState.Chase:
-                transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                agent.SetDestination(target.position);
                 break;
             case EnemyState.Patrol:
-                transform.position = Vector3.MoveTowards(transform.position, pointTracker, speed * Time.deltaTime);
-                if(Vector3.Distance(transform.position, pointTracker) < 0.1f)
+                agent.SetDestination(pointTracker);
+                if(!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     pointTracker = pointTracker == pointA ? pointB : pointA;
                 }
                 break;
             case EnemyState.Attack:
                 player.TakeDamage(damage * Time.deltaTime);
+                agent.ResetPath();
                 break;
         }
     }

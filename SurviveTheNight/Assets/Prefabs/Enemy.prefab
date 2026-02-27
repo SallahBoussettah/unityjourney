@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2001353268774511731}
   - component: {fileID: 2654642239923678219}
   - component: {fileID: 5649892185103055360}
+  - component: {fileID: -3118824133943570665}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -127,3 +128,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow
   target: {fileID: 0}
   speed: 3
+  damage: 10
+  spawner: {fileID: 0}
+  playerDetection: 15
+  patrolDetection: 25
+  attackDetection: 1.5
+  player: {fileID: 0}
+--- !u!195 &-3118824133943570665
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226760022689505438}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

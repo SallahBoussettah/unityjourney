@@ -4,8 +4,8 @@
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Current Project:** SurviveTheNight (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-27
-- **Total Sessions:** 11
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI
+- **Total Sessions:** 12
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI, NavMeshAgent, SetDestination, NavMesh Surface baking
 
 ---
 
@@ -98,7 +98,7 @@ Goal: A survival game with enemies, health, and a flashlight.
 - [x] Enemy AI: basic chase (MoveTowards), damage on contact, self-destruct
 - [x] Health system (take damage, die)
 - [x] Spawn system (timer-based, random positions, prefabs, list tracking, enemy self-removal)
-- [ ] Enemy AI: patrol, states (enum/switch), NavMesh pathfinding
+- [x] Enemy AI: patrol, states (enum/switch), NavMesh pathfinding
 - [ ] Health system: heal, UI display
 - [ ] Simple inventory (pick up items, use them)
 - [ ] Flashlight mechanic
@@ -173,7 +173,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] SceneManager (LoadScene, Build Settings scene list)
 - [x] UI (Canvas, TextMeshPro, Buttons, OnClick)
 - [x] AudioSource (PlayOneShot, AudioClip, isPlaying)
-- [ ] NavMesh (AI navigation)
+- [x] NavMesh (AI navigation)
 - [x] Raycasting (Physics.Raycast for ground check)
 - [ ] Animation (Animator, states, triggers)
 - [ ] JSON / Data persistence
@@ -359,6 +359,18 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Commented out OnCollisionEnter destroy (enemy no longer self-destructs on contact)
 - Next: NavMesh pathfinding
 
+### Session 12 — 2026-02-27
+- Installed AI Navigation package (already in project)
+- Learned NavMesh Surface: bake walkable areas on the floor, walls cut holes automatically
+- Learned NavMeshAgent: add to enemy, handles pathfinding and movement
+- Learned `using UnityEngine.AI`, `agent.SetDestination()`, `agent.ResetPath()`
+- Learned `agent.pathPending` and `agent.remainingDistance` for checking arrival
+- Replaced all Vector3.MoveTowards in EnemyFollow with NavMeshAgent calls
+- Enemies now navigate around walls to reach the player
+- Set agent.speed from script variable for control
+- Quick session, state system was already solid from Session 11
+- Next: Flashlight mechanic
+
 ---
 
 ## Notes to Future Claude
@@ -377,7 +389,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 
 ## Current Scripts in Project (SurviveTheNight)
 - **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, isAlive stops movement/jump when dead). Public TakeDamage(float).
-- **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack). Distance checks drive state transitions. Patrol between auto-generated points, chase player, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), and player (PlayerController, set in Start).
+- **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack). NavMeshAgent for pathfinding. Distance checks drive state transitions. Patrol between auto-generated points, chase player around obstacles, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), player (PlayerController), and NavMeshAgent.
 - **EnemySpawner.cs** (on empty GameObject): Timer-based spawning with Random.Range positions. Instantiates enemy prefab, sets target and spawner refs. List tracks spawned enemies, maxEnemies cap. Public destroyEnemy(GameObject) removes from list.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
 

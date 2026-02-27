@@ -488,4 +488,35 @@ if (dist <= detectionRange)
 
 ---
 
+## NavMesh (AI Pathfinding)
+
+**Setup:** Install "AI Navigation" package from Package Manager (Unity Registry). Add **NavMesh Surface** to your floor, click **Bake**. Blue overlay = walkable area.
+
+**NavMeshAgent:** Add to the enemy. Needs `using UnityEngine.AI;`.
+```csharp
+NavMeshAgent agent;
+
+void Start()
+{
+    agent = GetComponent<NavMeshAgent>();
+    agent.speed = speed;
+}
+
+// Tell it where to go (finds path around obstacles)
+agent.SetDestination(target.position);
+
+// Stop moving
+agent.ResetPath();
+
+// Check if arrived
+if (!agent.pathPending && agent.remainingDistance < 0.5f)
+{
+    // reached destination
+}
+```
+- NavMeshAgent handles all movement. Don't set `transform.position` directly.
+- Re-bake after changing walls/floor geometry.
+
+---
+
 *Add new entries as you learn them. Keep it short.*
