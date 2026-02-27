@@ -89,8 +89,8 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Unity Installed:** Yes (Unity 6.3)
 - **Last Session:** 2026-02-27
-- **Sessions so far:** 12
-- **Next step:** Session 13, flashlight mechanic
+- **Sessions so far:** 13
+- **Next step:** Session 14, inventory system
 
 ---
 
@@ -105,4 +105,5 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 **2026-02-26:** Session 10. Phase 3 started. Created SurviveTheNight project. Learned arrays, lists, for loops, prefabs, Instantiate, Random.Range, spawn timer. Built enemy chase + spawner + health/damage system.
 **2026-02-27:** Session 11. Enums, switch statements, Vector3.Distance. Built state-based enemy AI (Idle, Patrol, Chase, Attack) with distance-driven transitions and gradual attack damage.
 **2026-02-27:** Session 12. NavMesh pathfinding. Enemies navigate around walls using NavMeshAgent and SetDestination.
-**Next:** Session 13, flashlight mechanic.
+**2026-02-27:** Session 13. Flashlight mechanic. Dark scene, Spot Light on player, smooth rotation, F to toggle, raycast detects enemies, Retreat state added.
+**Next:** Session 14, inventory system.

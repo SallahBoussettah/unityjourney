@@ -4,8 +4,8 @@
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Current Project:** SurviveTheNight (Unity 6.3, Universal 3D URP)
 - **Last Session:** 2026-02-27
-- **Total Sessions:** 12
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI, NavMeshAgent, SetDestination, NavMesh Surface baking
+- **Total Sessions:** 13
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI, NavMeshAgent, SetDestination, NavMesh Surface baking, Light component, Spot Light, RaycastHit/out parameter, smooth rotation (Vector3.Slerp), light toggle
 
 ---
 
@@ -101,7 +101,7 @@ Goal: A survival game with enemies, health, and a flashlight.
 - [x] Enemy AI: patrol, states (enum/switch), NavMesh pathfinding
 - [ ] Health system: heal, UI display
 - [ ] Simple inventory (pick up items, use them)
-- [ ] Flashlight mechanic
+- [x] Flashlight mechanic (Spot Light, toggle, raycast enemy detection, retreat state)
 - [ ] Win/lose conditions
 
 **C# concepts this phase:** enums, switch statements, NavMesh, ScriptableObjects, more complex classes
@@ -371,6 +371,20 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Quick session, state system was already solid from Session 11
 - Next: Flashlight mechanic
 
+### Session 13 — 2026-02-27
+- Made scene dark: Directional Light intensity to 0.01, ambient light intensity to 0
+- Added Spot Light as child of player for flashlight effect
+- Added smooth player rotation with Vector3.Slerp so flashlight follows movement direction
+- Created Flashlight.cs: toggle light on/off with F key, raycast to detect enemies
+- Learned `out` parameter with RaycastHit: `Physics.Raycast(origin, direction, out hit, range)`
+- Learned Light component: `.enabled` to toggle on/off
+- Learned `!variable.enabled` pattern to flip a bool
+- Added Retreat state to enemy: moves away from player when flashlight shines on it
+- Retreat direction: `transform.position - target.position` (direction away from player)
+- Tracked lastEnemy in Flashlight to properly clear isLit when ray stops hitting
+- Raycast detection works but is narrow (single ray vs cone). Future improvement noted.
+- Next: Inventory system
+
 ---
 
 ## Notes to Future Claude
@@ -389,7 +403,8 @@ Goal: A 30-60 minute story-driven game. The real thing.
 
 ## Current Scripts in Project (SurviveTheNight)
 - **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, isAlive stops movement/jump when dead). Public TakeDamage(float).
-- **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack). NavMeshAgent for pathfinding. Distance checks drive state transitions. Patrol between auto-generated points, chase player around obstacles, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), player (PlayerController), and NavMeshAgent.
+- **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack, Retreat). NavMeshAgent for pathfinding. Distance checks drive state transitions. Retreat when isLit by flashlight. Patrol between auto-generated points, chase player around obstacles, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), player (PlayerController), and NavMeshAgent.
+- **Flashlight.cs** (on Spot Light, child of Player): Toggle light with F key. Raycasts forward to detect enemies, sets isLit on EnemyFollow. Tracks lastEnemy to clear isLit when ray moves away.
 - **EnemySpawner.cs** (on empty GameObject): Timer-based spawning with Random.Range positions. Instantiates enemy prefab, sets target and spawner refs. List tracks spawned enemies, maxEnemies cap. Public destroyEnemy(GameObject) removes from list.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
 

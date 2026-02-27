@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public float maxHealth = 100f;
     public bool isAlive;
 
+    public float rotationSpeed = 5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,6 +75,10 @@ public class PlayerController : MonoBehaviour
             direction.x -= 1;
         }
         direction = direction.normalized;
+        if (direction != Vector3.zero)
+        {
+            transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * rotationSpeed);
+        }
         rb.MovePosition(transform.position + direction * walkSpeed * Time.fixedDeltaTime);
     }
 }

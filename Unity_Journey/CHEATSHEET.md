@@ -519,4 +519,44 @@ if (!agent.pathPending && agent.remainingDistance < 0.5f)
 
 ---
 
+## Light Component
+
+**Spot Light**: Cone-shaped light. Add as child of player for a flashlight effect.
+
+Toggle on/off:
+```csharp
+Light spotLight = GetComponent<Light>();
+spotLight.enabled = !spotLight.enabled;  // flips true/false
+```
+
+---
+
+## Raycast with Hit Info
+
+Extended raycast that tells you **what** it hit:
+```csharp
+RaycastHit hit;
+if (Physics.Raycast(transform.position, transform.forward, out hit, range))
+{
+    // hit.collider.gameObject = what was hit
+    // hit.collider.CompareTag("Enemy") = check tag
+    // hit.collider.GetComponent<EnemyFollow>() = get script
+}
+```
+- `out hit` fills the variable with hit info (position, collider, distance).
+- Returns false if nothing was hit within range.
+
+---
+
+## Smooth Rotation (Slerp)
+
+Rotate gradually instead of snapping:
+```csharp
+transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * rotationSpeed);
+```
+- Blends between current facing direction and target direction.
+- Higher rotationSpeed = faster turn. 10-15 feels smooth.
+
+---
+
 *Add new entries as you learn them. Keep it short.*
