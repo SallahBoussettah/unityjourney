@@ -88,9 +88,9 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Unity Installed:** Yes (Unity 6.3)
-- **Last Session:** 2026-02-26
-- **Sessions so far:** 10
-- **Next step:** Session 11, enemy states with enums and switch statements
+- **Last Session:** 2026-02-27
+- **Sessions so far:** 11
+- **Next step:** Session 12, NavMesh pathfinding
 
 ---
 
@@ -103,4 +103,5 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 **2026-02-25-26:** Sessions 7-8. Phase 2: jumping, raycasting, moving platforms, kill zones, hazards, scene loading, audio, main menu. Phase 2 COMPLETE.
 **2026-02-26:** Session 9. Gauntlet challenge: rebuilt entire game from scratch with no reference. Discovered new patterns independently (string interpolation, LateUpdate, MoveTowards, ternary, helper functions). Phase 2 FULLY COMPLETE.
 **2026-02-26:** Session 10. Phase 3 started. Created SurviveTheNight project. Learned arrays, lists, for loops, prefabs, Instantiate, Random.Range, spawn timer. Built enemy chase + spawner + health/damage system.
-**Next:** Session 11, enemy states (enums, switch statements).
+**2026-02-27:** Session 11. Enums, switch statements, Vector3.Distance. Built state-based enemy AI (Idle, Patrol, Chase, Attack) with distance-driven transitions and gradual attack damage.
+**Next:** Session 12, NavMesh pathfinding.

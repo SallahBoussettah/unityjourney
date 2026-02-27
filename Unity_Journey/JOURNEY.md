@@ -3,9 +3,9 @@
 ## Current Status
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Current Project:** SurviveTheNight (Unity 6.3, Universal 3D URP)
-- **Last Session:** 2026-02-26
-- **Total Sessions:** 10
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime
+- **Last Session:** 2026-02-27
+- **Total Sessions:** 11
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI
 
 ---
 
@@ -155,8 +155,8 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - [x] Loops (for)
 - [x] Arrays and Lists
 - [ ] Classes and Objects
-- [ ] Enums
-- [ ] Switch statements
+- [x] Enums
+- [x] Switch statements
 
 ### Unity-Specific
 - [x] MonoBehaviour (Start, Update)
@@ -181,7 +181,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 
 ### Patterns
 - [ ] Component pattern (naming what you already do)
-- [ ] State tracking with enums
+- [x] State tracking with enums
 - [ ] Events for decoupling systems
 - [ ] State machines
 
@@ -345,6 +345,20 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Learned cross-script reference pattern at runtime (spawner sets target and spawner refs after Instantiate)
 - Next: Enemy states with enums and switch statements
 
+### Session 11 — 2026-02-27
+- Learned enums: custom types with fixed named options (EnemyState: Idle, Patrol, Chase, Attack)
+- Learned switch statements: run different code per enum value, cleaner than if/else chains
+- Learned Vector3.Distance for range-based detection
+- Built state-based enemy AI with distance-driven transitions:
+  - Idle: stands still (far away)
+  - Patrol: walks between two auto-generated points using MoveTowards + ternary swap
+  - Chase: follows player when within detection range
+  - Attack: gradual damage (damage * Time.deltaTime) when very close
+- Patrol points generated in Start based on spawn position (no Inspector setup needed)
+- Stored PlayerController reference in Start instead of fetching every frame (performance habit)
+- Commented out OnCollisionEnter destroy (enemy no longer self-destructs on contact)
+- Next: NavMesh pathfinding
+
 ---
 
 ## Notes to Future Claude
@@ -363,7 +377,7 @@ Goal: A 30-60 minute story-driven game. The real thing.
 
 ## Current Scripts in Project (SurviveTheNight)
 - **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, isAlive stops movement/jump when dead). Public TakeDamage(float).
-- **EnemyFollow.cs** (on Enemy Prefab): Chases player via Vector3.MoveTowards. OnCollisionEnter deals damage to player, tells spawner to remove from list, destroys self. Holds public references to target (Transform) and spawner (EnemySpawner).
+- **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack). Distance checks drive state transitions. Patrol between auto-generated points, chase player, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), and player (PlayerController, set in Start).
 - **EnemySpawner.cs** (on empty GameObject): Timer-based spawning with Random.Range positions. Instantiates enemy prefab, sets target and spawner refs. List tracks spawned enemies, maxEnemies cap. Public destroyEnemy(GameObject) removes from list.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
 

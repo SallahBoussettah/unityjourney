@@ -437,4 +437,55 @@ int num = Random.Range(0, 10);      // int version: includes min, EXCLUDES max (
 
 ---
 
+## Enums
+
+A custom type with a fixed set of named options. Prevents typos and makes code readable:
+```csharp
+enum EnemyState
+{
+    Idle,
+    Patrol,
+    Chase,
+    Attack
+}
+
+EnemyState currentState = EnemyState.Idle;
+```
+- Can only be set to one of the defined values. Anything else won't compile.
+- Define inside or outside your class.
+
+---
+
+## Switch Statements
+
+Run different code based on a value. Cleaner than multiple if/else for enums:
+```csharp
+switch (currentState)
+{
+    case EnemyState.Idle:
+        // stand still
+        break;
+    case EnemyState.Chase:
+        // move toward player
+        break;
+}
+```
+- Each `case` handles one value.
+- `break` stops it from falling into the next case.
+
+---
+
+## Vector3.Distance
+
+Returns the distance between two points as a float:
+```csharp
+float dist = Vector3.Distance(transform.position, target.position);
+if (dist <= detectionRange)
+{
+    // player is close enough
+}
+```
+
+---
+
 *Add new entries as you learn them. Keep it short.*
