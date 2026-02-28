@@ -88,9 +88,9 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Unity Installed:** Yes (Unity 6.3)
-- **Last Session:** 2026-02-27
-- **Sessions so far:** 13
-- **Next step:** Session 14, inventory system
+- **Last Session:** 2026-02-28
+- **Sessions so far:** 14
+- **Next step:** Session 15, win/lose conditions
 
 ---
 
@@ -106,4 +106,5 @@ D:\UnrealEngine Projects\Scrambling_Ideas\
 **2026-02-27:** Session 11. Enums, switch statements, Vector3.Distance. Built state-based enemy AI (Idle, Patrol, Chase, Attack) with distance-driven transitions and gradual attack damage.
 **2026-02-27:** Session 12. NavMesh pathfinding. Enemies navigate around walls using NavMeshAgent and SetDestination.
 **2026-02-27:** Session 13. Flashlight mechanic. Dark scene, Spot Light on player, smooth rotation, F to toggle, raycast detects enemies, Retreat state added.
-**Next:** Session 14, inventory system.
+**2026-02-28:** Session 14. Health UI (TextMeshProUGUI, string interpolation with :F0 formatting, Mathf.Min/Max for clamping). Heal function. Inventory system with List<string>, HealthPack pickup script, AddItem, UseHealthPack with full-health check. Inventory UI showing pack count. Lambda expressions (discovered early).
+**Next:** Session 15, win/lose conditions.

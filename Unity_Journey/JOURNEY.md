@@ -3,9 +3,9 @@
 ## Current Status
 - **Phase:** 3 — Survive the Night (IN PROGRESS)
 - **Current Project:** SurviveTheNight (Unity 6.3, Universal 3D URP)
-- **Last Session:** 2026-02-27
-- **Total Sessions:** 13
-- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI, NavMeshAgent, SetDestination, NavMesh Surface baking, Light component, Spot Light, RaycastHit/out parameter, smooth rotation (Vector3.Slerp), light toggle
+- **Last Session:** 2026-02-28
+- **Total Sessions:** 14
+- **Skills Unlocked:** Variables, types, Debug.Log, if/else, functions, return values, Update, Transform, Input, Time.deltaTime, bool logic, public/Inspector, stamina systems, Rigidbody, GetComponent, FixedUpdate, Vector3, normalized, physics movement, OnTriggerEnter/Stay, CompareTag, Destroy, cross-script communication, Tags, camera follow, UI Canvas, TextMeshProUGUI, using TMPro, AddForce, ForceMode.Impulse, Physics.Raycast, ground check, Mathf.PingPong, OnCollisionEnter/Exit, moving platforms, respawn system, rb.linearVelocity, SceneManager.LoadScene, AudioSource, PlayOneShot, AudioClip, UI Buttons, OnClick events, main menu, string interpolation, -= shorthand, LateUpdate, Vector3.MoveTowards, ternary operator, null checks, helper functions, arrays, Lists, for loops, Prefabs, Instantiate, Random.Range, spawn timer pattern, this keyword, cross-script references at runtime, enums, switch statements, Vector3.Distance, state-based AI, NavMeshAgent, SetDestination, NavMesh Surface baking, Light component, Spot Light, RaycastHit/out parameter, smooth rotation (Vector3.Slerp), light toggle, Mathf.Min/Max (clamping values), :F0 string formatting, List.Contains, List.Remove, lambda expressions, inventory system
 
 ---
 
@@ -102,6 +102,8 @@ Goal: A survival game with enemies, health, and a flashlight.
 - [ ] Health system: heal, UI display
 - [ ] Simple inventory (pick up items, use them)
 - [x] Flashlight mechanic (Spot Light, toggle, raycast enemy detection, retreat state)
+- [x] Health system: heal, UI display
+- [x] Simple inventory (pick up items, use them)
 - [ ] Win/lose conditions
 
 **C# concepts this phase:** enums, switch statements, NavMesh, ScriptableObjects, more complex classes
@@ -383,7 +385,22 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Retreat direction: `transform.position - target.position` (direction away from player)
 - Tracked lastEnemy in Flashlight to properly clear isLit when ray stops hitting
 - Raycast detection works but is narrow (single ray vs cone). Future improvement noted.
-- Next: Inventory system
+- Next: Win/lose conditions
+
+### Session 14 — 2026-02-28
+- Added health UI: TextMeshProUGUI displays "Health: 85/100" with string interpolation
+- Learned `:F0` format specifier to show whole numbers only (no decimals)
+- Learned `Mathf.Max(value, 0)` to prevent health going negative
+- Learned `Mathf.Min(value, max)` to cap healing at max health
+- Built Heal() function with max health clamping
+- Created inventory system using `List<string>`
+- Built HealthPack.cs: OnTriggerEnter pickup, adds to inventory, destroys itself
+- Built AddItem() and UseHealthPack() methods in PlayerController
+- Learned `List.Contains()` to check if item exists, `List.Remove()` to take it out
+- Added full-health check before using health pack (don't waste it)
+- Added inventory UI showing health pack count
+- Discovered lambda expressions: `inventory.Count(i => i == "HealthPack")`
+- Next: Win/lose conditions
 
 ---
 
@@ -402,9 +419,10 @@ Goal: A 30-60 minute story-driven game. The real thing.
 - Spawn research teams when investigating new topics, not for routine teaching.
 
 ## Current Scripts in Project (SurviveTheNight)
-- **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, isAlive stops movement/jump when dead). Public TakeDamage(float).
+- **PlayerController.cs** (on Player Cube): WASD physics movement (MovePosition, normalized), jumping (AddForce, Impulse), ground check (Raycast), health system (TakeDamage, Heal, isAlive stops movement/jump when dead), health UI (TextMeshProUGUI with :F0 formatting, Mathf.Min/Max clamping), inventory system (List<string>, AddItem, UseHealthPack with Contains/Remove, full-health check, inventory count UI with lambda).
 - **EnemyFollow.cs** (on Enemy Prefab): State-based AI with enum (Idle, Patrol, Chase, Attack, Retreat). NavMeshAgent for pathfinding. Distance checks drive state transitions. Retreat when isLit by flashlight. Patrol between auto-generated points, chase player around obstacles, gradual attack damage. Holds references to target (Transform), spawner (EnemySpawner), player (PlayerController), and NavMeshAgent.
 - **Flashlight.cs** (on Spot Light, child of Player): Toggle light with F key. Raycasts forward to detect enemies, sets isLit on EnemyFollow. Tracks lastEnemy to clear isLit when ray moves away.
+- **HealthPack.cs** (on pickup objects): OnTriggerEnter detects player, calls AddItem("HealthPack") on PlayerController, destroys itself.
 - **EnemySpawner.cs** (on empty GameObject): Timer-based spawning with Random.Range positions. Instantiates enemy prefab, sets target and spawner refs. List tracks spawned enemies, maxEnemies cap. Public destroyEnemy(GameObject) removes from list.
 - **CameraFollow.cs** (on Main Camera): Follows player Transform with Vector3 offset in LateUpdate.
 

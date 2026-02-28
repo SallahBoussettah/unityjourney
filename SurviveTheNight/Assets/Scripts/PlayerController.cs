@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,11 +18,18 @@ public class PlayerController : MonoBehaviour
 
     public float rotationSpeed = 5f;
 
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI healthPack;
+
+    List<string> inventory = new List<string>(); 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         isAlive = true;
+        healthText.text = $"Health: {health:F0}/{maxHealth}";
+        healthPack.text = $"Health Pack(s): {inventory.Count(i => i == "HealthPack")}";
     }
 
     // Update is called once per frame
@@ -30,6 +40,32 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        if (Input.GetKeyDown(KeyCode.H) && isAlive)
+        {
+            UseHealthPack();
+        }
+    }
+
+    public void AddItem(string item)
+    {
+        inventory.Add(item);
+        healthPack.text = $"Health Pack(s): {inventory.Count(i => i == "HealthPack")}";
+    }
+
+    public void UseHealthPack()
+    {
+        if (inventory.Contains("HealthPack"))
+        {
+            if(health == maxHealth)
+            {
+                Debug.Log("Already Full Health!");
+            } else
+            {
+                Heal(20f);
+                inventory.Remove("HealthPack");
+                healthPack.text = $"Health Pack(s): {inventory.Count(i => i == "HealthPack")}";
+            }
+        }
     }
 
     public void TakeDamage(float damage)
@@ -38,12 +74,23 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        health -= damage;
+        health = Mathf.Max(health - damage, 0);
+        healthText.text = $"Health: {health:F0}/{maxHealth}";
         if(health <= 0)
         {
             isAlive = false;
             Debug.Log("Player is Dead!");
         }
+    }
+
+    public void Heal(float heal)
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+        health = Mathf.Min(health + heal, maxHealth);
+        healthText.text = $"Health: {health:F0}/{maxHealth}";
     }
 
     bool isGrounded()
